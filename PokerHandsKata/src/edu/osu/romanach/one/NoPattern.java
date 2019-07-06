@@ -12,7 +12,7 @@ public class NoPattern extends PokerPlayingCardPattern {
 	}
 	
 	public List<PlayingCard> getRankingCards(List<PlayingCard> cards) {
-		//Return null, since there's no pattern to rank
-		return null;
+		//Return empty list, since there's no pattern to rank
+		return new ArrayList<PlayingCard>();
 	}
 }

@@ -36,6 +36,11 @@ public class PokerHand {
 		return calculateBestPattern();
 	}
 	
+	public List<PlayingCard> getRankingCards() {
+		PokerPlayingCardPattern pattern = calculateBestPattern();
+		return pattern.getRankingCards(cards);
+	}
+	
 	public List<PlayingCard> getAllCards() {
 		return cards;
 	}

@@ -13,6 +13,6 @@ public class OnePair extends PokerPlayingCardPattern {
 	
 	public List<PlayingCard> getRankingCards(List<PlayingCard> cards) {
 		//TODO: search logic here
-		return null;
+		return new ArrayList<PlayingCard>();
 	}
 }

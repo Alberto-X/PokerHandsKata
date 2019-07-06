@@ -44,7 +44,7 @@ public class PlayingCard {
 		suit = suitStrings.get(suitStr);
 	}
 	
-	public int GetValue() {
+	public int getValue() {
 		return value;
 	}
 	

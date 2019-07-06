@@ -24,7 +24,7 @@ public abstract class PokerPlayingCardPattern {
 	/**
 	 * Returns a list of cards used to determine the "rank" of this pattern (for tie-breakers).
 	 * @requires {@code cards} must contain this pattern
-	 * @return list of cards (or null if NoPattern)
+	 * @return list of cards (empty list if NoPattern)
 	 */
 	public abstract List<PlayingCard> getRankingCards(List<PlayingCard> cards);
 }

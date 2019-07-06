@@ -1,5 +1,6 @@
 package edu.osu.romanach.one;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Determines the winner of a Poker game.
@@ -57,7 +58,22 @@ public class PokerGame {
 			
 			//FIND WINNER
 			List<PokerHand> winners = dealer.getWinner();
-			System.out.println(String.format("Winner One: %s\n", winners.get(0).getPlayerName().toUpperCase()));
+			if (winners.size() > 1) {
+				System.out.println("TIE!");
+				System.out.println(String.format("  >> %s", winners.get(0).getPlayerName().toUpperCase()));
+				//System.out.println(String.format("  >> %s", winners.get(0).getRankingCards()));
+			}
+			else {
+				List<String> winnerNames = winners.stream()
+												  .map(w -> w.getPlayerName().toUpperCase())
+												  .collect(Collectors.toList());
+				
+				System.out.println("WINNER!");
+				System.out.println(String.format("  >> %s", String.join(", ", winnerNames)));
+				//System.out.println(String.format("  >> %s", winners.get(0).getRankingCards()));
+			}			
+			
+			System.out.println();
 		}
 
 	}
