@@ -21,7 +21,7 @@ public class PokerGame {
 		//Only instances of patterns passed around
 		//validPatterns.add(new TwoPair(3));
 		validPatterns.add(new OnePair(2));
-		//validPatterns.add(new HighCard(1));
+		validPatterns.add(new HighCard(1));
 	}
 	
 	/**
@@ -61,7 +61,7 @@ public class PokerGame {
 			if (winner.getWinningHands().size() == 1) {
 				PokerHand winningHand = winner.getWinningHands().get(0);
 				List<String> winningRanks = winner.getWinningRanks().stream()
-																	.map(r -> r.toString())
+																	.map(r -> ((Integer)r.getValue()).toString())
 																	.collect(Collectors.toList());
 				
 				System.out.println("WINNER!");
@@ -74,7 +74,7 @@ public class PokerGame {
 												  				   .map(h -> h.getPlayerName().toUpperCase())
 												  				   .collect(Collectors.toList());
 				List<String> winningRanks = winner.getWinningRanks().stream()
-																	.map(r -> r.toString())
+																	.map(r -> ((Integer)r.getValue()).toString())
 																	.collect(Collectors.toList());
 				
 				System.out.println("TIE!");

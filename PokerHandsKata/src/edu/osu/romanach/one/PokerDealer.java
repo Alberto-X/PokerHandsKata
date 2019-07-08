@@ -39,6 +39,7 @@ public class PokerDealer {
 				try {
 					PlayingCard rank = rankList.get(k);
 					if (rank.getValue() > highestRank) {
+						highestRank = rank.getValue();
 						winningHands.clear();
 						winningHands.put(entry.getKey(), entry.getValue());
 						
@@ -60,12 +61,14 @@ public class PokerDealer {
 				}
 			}
 			
-			//In case of tie, continue checking only hands with highest rank in this round
-			handRanks.clear();
-			handRanks.putAll(winningHands);
+			if (winningHands.size() > 0) {
+				//In case of tie, continue checking only hands with highest rank in this round
+				handRanks.clear();
+				handRanks.putAll(winningHands);
+			}
 			
 		//Keep going until only one winner or no more ranks to check
-		} while (handRanks.size() == 1 || round.size() > 0);
+		} while (handRanks.size() > 1 && round.size() > 0);
 		
 		List<PokerHand> winningHands = handRanks.keySet().stream().collect(Collectors.toList());
 		return new PokerWinner(winningHands, winningRanks);

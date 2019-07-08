@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 public class PokerHand {
 	private String playerName;
 	private List<PlayingCard> cards;
-	//private PokerHandPattern bestPattern;
 	
 	public PokerHand(String playerName, List<PlayingCard> cards) {
 		this.playerName = playerName;

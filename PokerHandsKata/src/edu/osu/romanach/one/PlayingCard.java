@@ -54,8 +54,8 @@ public class PlayingCard {
 	}
 	
 	/**
+	 * Makes first character of given string uppercase.
 	 * @requires |str| > 0
-	 * 
 	 */
 	private String firstCharToUpper(String str) {
 		return str.substring(0, 1).toUpperCase() + str.substring(1);
