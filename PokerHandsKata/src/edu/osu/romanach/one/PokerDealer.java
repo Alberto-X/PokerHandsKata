@@ -4,65 +4,70 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class PokerDealer {
-	private List<PokerHand> hands = new ArrayList<PokerHand>();
-	
-	public void giveHands(List<PokerHand> hands) {
-		this.hands.addAll(hands);
-	}
-	
-	public List<PokerHand> getWinner() {
-		//Sort hands by their best pattern
-		//TODO: hand comparator
-		//hands.sort(c);
+	public PokerWinner getWinner(List<PokerHand> hands) {
+		//Group hands by their best pattern
+		Map<PokerPlayingCardPattern, List<PokerHand>> handsByPattern = hands.stream().collect(Collectors.groupingBy(h -> h.getBestPattern()));
+		
+		//Sort the patterns
+		List<Entry<PokerPlayingCardPattern, List<PokerHand>>> patterns = new ArrayList<Map.Entry<PokerPlayingCardPattern,List<PokerHand>>>();
+		patterns = handsByPattern.entrySet()
+					  		     .stream()
+					      	     .collect(Collectors.toList());
+		patterns.sort(new PatternEntryHighToLowComparator<List<PokerHand>>());
 		
 		//Find all hands with highest pattern
-		List<PokerHand> handsWithBestValue = new ArrayList<PokerHand>();
-		int highestValue = hands.get(0).getBestPattern().getValue();
-		for (PokerHand hand : hands) {
-			if (hand.getBestPattern().getValue() == highestValue) {
-				handsWithBestValue.add(hand);
-			}
-		}
+		List<PokerHand> handsWithBestValue = patterns.get(0).getValue();
 		
-		//Find hands with highest rank (re-add entries to 'hands' that win each round of rank comparisons)
-		Map<PokerHand, List<PlayingCard>> hands = new HashMap<PokerHand, List<PlayingCard>>();
-		handsWithBestValue.forEach(h -> hands.put(h, h.getRankingCards()));
+		//Find hands with highest rank (add entries to 'handRanks' that win each round of rank comparisons)
+		Map<PokerHand, List<PlayingCard>> handRanks = new HashMap<PokerHand, List<PlayingCard>>();
+		handsWithBestValue.forEach(h -> handRanks.put(h, h.getRankingCards()));
 		
-		List<PlayingCard> ranks = new ArrayList<PlayingCard>();
+		List<PlayingCard> round = new ArrayList<PlayingCard>();
+		List<PlayingCard> winningRanks = new ArrayList<PlayingCard>();
 		int k = -1;
 		do {
 			k += 1;
 			
 			//Begin round k of rank comparisons
 			int highestRank = 0;
-			ranks.clear();
+			round.clear();
 			
 			//For each hand, compare the "k-th" ranked card
 			Map<PokerHand, List<PlayingCard>> winningHands = new HashMap<PokerHand, List<PlayingCard>>();
-			for (Entry<PokerHand, List<PlayingCard>> entry : hands.entrySet()) {
+			for (Entry<PokerHand, List<PlayingCard>> entry : handRanks.entrySet()) {
 				List<PlayingCard> rankList = entry.getValue();
 				try {
 					PlayingCard rank = rankList.get(k);
 					if (rank.getValue() > highestRank) {
 						winningHands.clear();
 						winningHands.put(entry.getKey(), entry.getValue());
+						
+						//Store best rank for this round
+						if (winningRanks.size() <= k) {
+							winningRanks.add(rank);
+						}
+						else {
+							winningRanks.set(k, rank);
+						}
 					}
 					else if (rank.getValue() == highestRank) {
-						winningHands.put(entry.getKey(), entry.getValue());						
+						winningHands.put(entry.getKey(), entry.getValue());
 					}
 					
-					ranks.add(rank);
-				} catch(Exception ex) {}
+					round.add(rank);
+				} catch(Exception ex) {
+					//No rank to compare for this hand
+				}
 			}
 			
 			//In case of tie, continue checking only hands with highest rank in this round
-			hands.clear();
-			hands.putAll(winningHands);
+			handRanks.clear();
+			handRanks.putAll(winningHands);
 			
 		//Keep going until only one winner or no more ranks to check
-		} while (hands.size() == 1 || ranks.size() > 0);
+		} while (handRanks.size() == 1 || round.size() > 0);
 		
-		return hands.keySet().stream()
-							 .collect(Collectors.toList());
+		List<PokerHand> winningHands = handRanks.keySet().stream().collect(Collectors.toList());
+		return new PokerWinner(winningHands, winningRanks);
 	}
 }

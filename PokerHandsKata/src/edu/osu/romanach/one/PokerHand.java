@@ -19,10 +19,8 @@ public class PokerHand {
 		}
 		
 		//Go thru patterns in descending order of value
-		//TODO: pattern comparator
-		//PokerGame.validPatterns.sort(c);
-		List<PokerPlayingCardPattern> sortedPatterns = PokerGame.validPatterns;
-		for (PokerPlayingCardPattern pattern : sortedPatterns) {
+		PokerGame.validPatterns.sort(new PatternHighToLowComparator());
+		for (PokerPlayingCardPattern pattern : PokerGame.validPatterns) {
 			//Return highest value pattern that matches cards
 			if (pattern.isFoundIn(cards)) {
 				return pattern;

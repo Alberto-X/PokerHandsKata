@@ -2,8 +2,10 @@ package edu.osu.romanach.one;
 import java.util.*;
 
 public class OnePair extends PokerPlayingCardPattern {
+	private static String patternName = "One Pair";
+	
 	public OnePair(int value) {
-		super(value);
+		super(value, patternName);
 	}
 	
 	public boolean isFoundIn(List<PlayingCard> cards) {
@@ -13,6 +15,7 @@ public class OnePair extends PokerPlayingCardPattern {
 	
 	public List<PlayingCard> getRankingCards(List<PlayingCard> cards) {
 		//TODO: search logic here
-		return new ArrayList<PlayingCard>();
+		List<PlayingCard> ranks = new ArrayList<PlayingCard>();
+		return ranks;
 	}
 }

@@ -18,6 +18,7 @@ public class PokerGame {
 	public static List<PokerPlayingCardPattern> validPatterns = new ArrayList<PokerPlayingCardPattern>();
 	
 	static {
+		//Only instances of patterns passed around
 		//validPatterns.add(new TwoPair(3));
 		validPatterns.add(new OnePair(2));
 		//validPatterns.add(new HighCard(1));
@@ -54,24 +55,35 @@ public class PokerGame {
 			
 			//CREATE DEALER
 			PokerDealer dealer = new PokerDealer();
-			dealer.giveHands(pokerHands);
 			
 			//FIND WINNER
-			List<PokerHand> winners = dealer.getWinner();
-			if (winners.size() > 1) {
-				System.out.println("TIE!");
-				System.out.println(String.format("  >> %s", winners.get(0).getPlayerName().toUpperCase()));
-				//System.out.println(String.format("  >> %s", winners.get(0).getRankingCards()));
-			}
-			else {
-				List<String> winnerNames = winners.stream()
-												  .map(w -> w.getPlayerName().toUpperCase())
-												  .collect(Collectors.toList());
+			PokerWinner winner = dealer.getWinner(pokerHands);
+			if (winner.getWinningHands().size() == 1) {
+				PokerHand winningHand = winner.getWinningHands().get(0);
+				List<String> winningRanks = winner.getWinningRanks().stream()
+																	.map(r -> r.toString())
+																	.collect(Collectors.toList());
 				
 				System.out.println("WINNER!");
+				System.out.println(String.format("  >> %s", winningHand.getPlayerName().toUpperCase()));
+				System.out.println(String.format("  >> %s, Rank: %s", winningHand.getBestPattern().getPatternName(), winningRanks));
+			}
+			else if (winner.getWinningHands().size() > 1) {
+				PokerHand someWinner = winner.getWinningHands().get(0);
+				List<String> winnerNames = winner.getWinningHands().stream()
+												  				   .map(h -> h.getPlayerName().toUpperCase())
+												  				   .collect(Collectors.toList());
+				List<String> winningRanks = winner.getWinningRanks().stream()
+																	.map(r -> r.toString())
+																	.collect(Collectors.toList());
+				
+				System.out.println("TIE!");
 				System.out.println(String.format("  >> %s", String.join(", ", winnerNames)));
-				//System.out.println(String.format("  >> %s", winners.get(0).getRankingCards()));
-			}			
+				System.out.println(String.format("  >> %s, Rank: %s", someWinner.getBestPattern().getPatternName(), winningRanks));
+			}
+			else {
+				System.out.println("NO WINNER!");
+			}
 			
 			System.out.println();
 		}

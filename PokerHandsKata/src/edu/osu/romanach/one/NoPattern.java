@@ -2,8 +2,10 @@ package edu.osu.romanach.one;
 import java.util.*;
 
 public class NoPattern extends PokerPlayingCardPattern {
+	private static String patternName = "No Pattern";
+	
 	public NoPattern(int value) {
-		super(value);
+		super(value, patternName);
 	}
 	
 	public boolean isFoundIn(List<PlayingCard> cards) {

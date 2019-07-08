@@ -3,18 +3,24 @@ import java.util.*;
 
 /**
  * Base class for any poker patterns.
- * @author Alberto
+ * @author Alberto Romañach
  *
  */
 public abstract class PokerPlayingCardPattern {
 	private int value;
+	private String patternName;
 	
-	public PokerPlayingCardPattern(int value) {
+	public PokerPlayingCardPattern(int value, String patternName) {
 		this.value = value;
+		this.patternName = patternName;
 	}
 	
 	public int getValue() {
 		return value;
+	}
+	
+	public String getPatternName() {
+		return patternName;
 	}
 	
 	/**
