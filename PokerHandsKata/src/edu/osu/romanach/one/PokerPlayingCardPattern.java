@@ -33,4 +33,8 @@ public abstract class PokerPlayingCardPattern {
 	 * @return list of cards (empty list if NoPattern)
 	 */
 	public abstract List<PlayingCard> getRankingCards(List<PlayingCard> cards);
+	/**
+	 * Returns the rank of this pattern as a string, given list of ranking cards.
+	 */
+	public abstract String getRankAsString(List<PlayingCard> ranks);
 }

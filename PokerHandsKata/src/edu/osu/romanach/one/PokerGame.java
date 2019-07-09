@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class PokerGame {
 	private static String input = ""
 			+ "Black:2S 2C 3H 4H 5H,"
-			+ "White:2H 2D 3D 4D 5D"
+			+ "White:2H 2D 3D 4D KD"
 			+ "NEW ROUND"
 			+ "Black:2S 4S 6S 8S 10S,"
 			+ "White:2H 3H 4H 5H 6H";
@@ -60,26 +60,22 @@ public class PokerGame {
 			PokerWinner winner = dealer.getWinner(pokerHands);
 			if (winner.getWinningHands().size() == 1) {
 				PokerHand winningHand = winner.getWinningHands().get(0);
-				List<String> winningRanks = winner.getWinningRanks().stream()
-																	.map(r -> ((Integer)r.getValue()).toString())
-																	.collect(Collectors.toList());
+				PokerPlayingCardPattern pattern = winningHand.getBestPattern();
 				
 				System.out.println("WINNER!");
 				System.out.println(String.format("  >> %s", winningHand.getPlayerName().toUpperCase()));
-				System.out.println(String.format("  >> %s, Rank: %s", winningHand.getBestPattern().getPatternName(), winningRanks));
+				System.out.println(String.format("  >> %s, Rank: %s", pattern.getPatternName(), pattern.getRankAsString(winner.getWinningRanks())));
 			}
 			else if (winner.getWinningHands().size() > 1) {
 				PokerHand someWinner = winner.getWinningHands().get(0);
+				PokerPlayingCardPattern pattern = someWinner.getBestPattern();
 				List<String> winnerNames = winner.getWinningHands().stream()
 												  				   .map(h -> h.getPlayerName().toUpperCase())
 												  				   .collect(Collectors.toList());
-				List<String> winningRanks = winner.getWinningRanks().stream()
-																	.map(r -> ((Integer)r.getValue()).toString())
-																	.collect(Collectors.toList());
 				
 				System.out.println("TIE!");
 				System.out.println(String.format("  >> %s", String.join(", ", winnerNames)));
-				System.out.println(String.format("  >> %s, Rank: %s", someWinner.getBestPattern().getPatternName(), winningRanks));
+				System.out.println(String.format("  >> %s, Rank: %s", pattern.getPatternName(), pattern.getRankAsString(winner.getWinningRanks())));
 			}
 			else {
 				System.out.println("NO WINNER!");

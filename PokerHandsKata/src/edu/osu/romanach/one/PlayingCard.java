@@ -48,6 +48,10 @@ public class PlayingCard {
 		return value;
 	}
 	
+	public String getValueName() {
+		return firstCharToUpper(valueName);
+	}
+	
 	@Override
 	public String toString() {
 		return String.format("%s of %s", firstCharToUpper(valueName), suit);

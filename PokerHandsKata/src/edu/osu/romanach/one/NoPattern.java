@@ -17,4 +17,8 @@ public class NoPattern extends PokerPlayingCardPattern {
 		//Return empty list, since there's no pattern to rank
 		return new ArrayList<PlayingCard>();
 	}
+
+	public String getRankAsString(List<PlayingCard> ranks) {
+		return "[]";
+	}
 }
