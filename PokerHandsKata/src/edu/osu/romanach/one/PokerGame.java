@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
  */
 public class PokerGame {
 	private static String input = ""
-			+ "Black:2S 2C 3H 4H 5H,"
-			+ "White:2H 2D 3D 4D KD"
+			+ "Black:2S 2C 3H 3H 4H,"
+			+ "White:2H 3D 3D 4D 4D"
 			+ "NEW ROUND"
 			+ "Black:2S 4S 6S 8S 10S,"
 			+ "White:2H 3H 4H 5H 6H";
@@ -19,7 +19,7 @@ public class PokerGame {
 	
 	static {
 		//Only instances of patterns passed around
-		//validPatterns.add(new TwoPair(3));
+		validPatterns.add(new TwoPair(3));
 		validPatterns.add(new OnePair(2));
 		validPatterns.add(new HighCard(1));
 	}
@@ -50,7 +50,7 @@ public class PokerGame {
 				//Add poker hand to list
 				PokerHand pokerHand = new PokerHand(playerName, playingCards);
 				pokerHands.add(pokerHand);
-				System.out.println(String.format("%s (best - %s)", pokerHand.toString(), pokerHand.getBestPattern().getValue()));
+				System.out.println(String.format("%s (%s)", pokerHand.toString(), pokerHand.getBestPattern().getPatternName()));
 			}
 			
 			//CREATE DEALER
