@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
  */
 public class PokerGame {
 	private static String input = ""
-			+ "Black:4H 4H AH AH AH,"
-			+ "White:4D 4D AD AD AD"
+			+ "Black:JH JH JH JH 4H,"
+			+ "White:JD JD JD JD AD"
 			+ "NEW ROUND"
 			+ "Black:2S 4S 6S 8S 10S,"
 			+ "White:2H 3H 4H 5H 6H";
@@ -19,6 +19,7 @@ public class PokerGame {
 	
 	static {
 		//Only instances of patterns passed around
+		validPatterns.add(new FourOfAKind(8));
 		validPatterns.add(new FullHouse(7));
 		validPatterns.add(new Flush(6));
 		validPatterns.add(new Straight(5));
