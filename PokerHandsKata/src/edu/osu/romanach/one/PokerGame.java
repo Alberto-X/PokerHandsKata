@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
  */
 public class PokerGame {
 	private static String input = ""
-			+ "Black:JH JH JH JH 4H,"
-			+ "White:JD JD JD JD AD"
+			+ "Black:AH 2H 3H 4H 5C,"
+			+ "White:AD 2D 3D 4D 5C"
 			+ "NEW ROUND"
 			+ "Black:2S 4S 6S 8S 10S,"
 			+ "White:2H 3H 4H 5H 6H";

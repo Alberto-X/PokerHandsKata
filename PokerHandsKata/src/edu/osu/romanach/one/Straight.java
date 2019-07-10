@@ -10,13 +10,19 @@ public class Straight extends PokerPlayingCardPattern {
 	}
 	
 	public boolean isFoundIn(List<PlayingCard> cards) {
-		PlayingCard two = new PlayingCard("2S");
 		PlayingCard ace = new PlayingCard("AS");
+		PlayingCard king = new PlayingCard("KS");
+		PlayingCard two = new PlayingCard("2S");
 		
 		//Sort cards
 		List<PlayingCard> sortedCards = new ArrayList<PlayingCard>();
 		sortedCards.addAll(cards);
 		sortedCards.sort(new PlayingCardHighToLowComparator());
+		
+		//Put ace at end if no succeeding king
+		if (sortedCards.get(0).getValue() == ace.getValue() && sortedCards.get(1).getValue() != king.getValue()) {
+			sortedCards.add(sortedCards.remove(0));
+		}
 		
 		//Ensure cards in consecutive order
 		int prevValue = sortedCards.get(0).getValue()+1;
@@ -35,12 +41,19 @@ public class Straight extends PokerPlayingCardPattern {
 	}
 	
 	public List<PlayingCard> getRankingCards(List<PlayingCard> cards) {
+		PlayingCard ace = new PlayingCard("AS");
+		PlayingCard king = new PlayingCard("KS");
 		List<PlayingCard> ranks = new ArrayList<PlayingCard>();
 		
 		//Sort cards
 		List<PlayingCard> sortedCards = new ArrayList<PlayingCard>();
 		sortedCards.addAll(cards);
 		sortedCards.sort(new PlayingCardHighToLowComparator());
+		
+		//Put ace at end if no succeeding king
+		if (sortedCards.get(0).getValue() == ace.getValue() && sortedCards.get(1).getValue() != king.getValue()) {
+			sortedCards.add(sortedCards.remove(0));
+		}
 		
 		//Add highest card to ranks
 		ranks.add(sortedCards.get(0));
