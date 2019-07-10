@@ -29,7 +29,7 @@ public class OnePair extends PokerPlayingCardPattern {
 		sortedCards.addAll(cards);
 		sortedCards.sort(new PlayingCardHighToLowComparator());
 
-		//Find the pair, add to ranks
+		//Find the pair, add to ranks (remove pair from deque)
 		PlayingCard pair1 = null;
 		Deque<PlayingCard> deque = new ArrayDeque<PlayingCard>();
 		for (PlayingCard card : sortedCards) {

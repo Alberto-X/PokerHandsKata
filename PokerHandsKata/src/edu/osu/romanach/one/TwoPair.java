@@ -34,7 +34,7 @@ public class TwoPair extends PokerPlayingCardPattern {
 		sortedCards.addAll(cards);
 		sortedCards.sort(new PlayingCardHighToLowComparator());
 
-		//Find 1st pair, add to ranks, then find 2nd pair, add to ranks
+		//Find 1st pair, add to ranks, then find 2nd pair, add to ranks (remove both pairs from deque)
 		PlayingCard pair1 = null;
 		PlayingCard pair2 = null;
 		Deque<PlayingCard> deque = new ArrayDeque<PlayingCard>();
@@ -42,7 +42,7 @@ public class TwoPair extends PokerPlayingCardPattern {
 			if (pair1 == null && !deque.isEmpty() && deque.peekLast().getValue() == card.getValue()) {
 				pair1 = deque.pollLast();
 				ranks.add(pair1);
-				continue; //runtime error --wow this is garbage trash junk worthless pointless meaningless waste unnecessary 
+				continue;
 			}
 			if (pair1 != null && pair2 == null && !deque.isEmpty() && deque.peekLast().getValue() == card.getValue()) {
 				pair2 = deque.pollLast();
