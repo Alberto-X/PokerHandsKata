@@ -77,6 +77,6 @@ public class TwoPair extends PokerPlayingCardPattern {
 			kickerFormat = ", %s kicker";
 		}
 		
-		return String.format("[pair of %s's" + pair2Format + kickerFormat + "]", pair1.getValue(), pair2.getValue(), String.join("-", kickers));
+		return String.format("[pair of %s's" + pair2Format + kickerFormat + "]", pair1.getValueName(), pair2.getValueName(), String.join("-", kickers));
 	}
 }

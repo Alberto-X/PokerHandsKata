@@ -57,6 +57,6 @@ public class OnePair extends PokerPlayingCardPattern {
 		if (kickers.size() > 0) {
 			kickerFormat = ", %s kicker";
 		}
-		return String.format("[pair of %s's" + kickerFormat + "]", pair1.getValue(), String.join("-", kickers));
+		return String.format("[pair of %s's" + kickerFormat + "]", pair1.getValueName(), String.join("-", kickers));
 	}
 }

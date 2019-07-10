@@ -67,6 +67,6 @@ public class ThreeOfAKind extends PokerPlayingCardPattern {
 			kickerFormat = ", %s kicker";
 		}
 		
-		return String.format("[trip %s's" + kickerFormat + "]", trip.getValue(), String.join("-", kickers));
+		return String.format("[trip %s's" + kickerFormat + "]", trip.getValueName(), String.join("-", kickers));
 	}
 }
