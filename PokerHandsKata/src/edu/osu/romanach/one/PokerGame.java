@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
  */
 public class PokerGame {
 	private static String input = ""
-			+ "Black:2H 3H 4H 6H AH,"
-			+ "White:3D 4D 5D 6D AD"
+			+ "Black:4H 4H AH AH AH,"
+			+ "White:4D 4D AD AD AD"
 			+ "NEW ROUND"
 			+ "Black:2S 4S 6S 8S 10S,"
 			+ "White:2H 3H 4H 5H 6H";
@@ -19,6 +19,7 @@ public class PokerGame {
 	
 	static {
 		//Only instances of patterns passed around
+		validPatterns.add(new FullHouse(7));
 		validPatterns.add(new Flush(6));
 		validPatterns.add(new Straight(5));
 		validPatterns.add(new ThreeOfAKind(4));
@@ -48,22 +49,34 @@ public class PokerGame {
 			PokerWinner winner = dealer.getWinner(hands);
 			if (winner.getWinningHands().size() == 1) {
 				PokerHand winningHand = winner.getWinningHands().get(0);
-				PokerPlayingCardPattern pattern = winningHand.getBestPattern();
+				PokerPlayingCardPattern winningPattern = winningHand.getBestPattern();
 				
-				System.out.println("WINNER!");
-				System.out.println(String.format("  >> %s", winningHand.getPlayerName().toUpperCase()));
-				System.out.println(String.format("  >> %s, Rank: %s", pattern.getPatternName(), pattern.getRankAsString(winner.getWinningRanks())));
+				String rankFormat = "";
+				String rankAsString = "";
+				if (winner.getWinningRanks().size() > 0) {
+					rankFormat = ", %s";
+					rankAsString = winningPattern.getRankAsString(winner.getWinningRanks());
+				}
+				
+				System.out.println(String.format("%s wins!", winningHand.getPlayerName().toUpperCase()));
+				System.out.println(String.format("  >> %s" + rankFormat, winningPattern.getPatternName(), rankAsString));
 			}
 			else if (winner.getWinningHands().size() > 1) {
 				PokerHand someWinner = winner.getWinningHands().get(0);
-				PokerPlayingCardPattern pattern = someWinner.getBestPattern();
+				PokerPlayingCardPattern winningPattern = someWinner.getBestPattern();
 				List<String> winnerNames = winner.getWinningHands().stream()
 												  				   .map(h -> h.getPlayerName().toUpperCase())
 												  				   .collect(Collectors.toList());
 				
-				System.out.println("TIE!");
-				System.out.println(String.format("  >> %s", String.join(", ", winnerNames)));
-				System.out.println(String.format("  >> %s, Rank: %s", pattern.getPatternName(), pattern.getRankAsString(winner.getWinningRanks())));
+				String rankFormat = "";
+				String rankAsString = "";
+				if (winner.getWinningRanks().size() > 0) {
+					rankFormat = ", %s";
+					rankAsString = winningPattern.getRankAsString(winner.getWinningRanks());
+				}
+				
+				System.out.println(String.format("%s tie.", String.join("/", winnerNames)));
+				System.out.println(String.format("  >> %s" + rankFormat, winningPattern.getPatternName(), rankAsString));
 			}
 			else {
 				System.out.println("NO WINNER!");

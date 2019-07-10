@@ -21,6 +21,10 @@ public class PokerDealer {
 			//Return empty winner if best pattern has no value
 			return new PokerWinner(new ArrayList<PokerHand>(), new ArrayList<PlayingCard>());
 		}
+		if (handsWithBestValue.size() == 1) {
+			//Return single winner, no ranking cards
+			return new PokerWinner(handsWithBestValue, new ArrayList<PlayingCard>());
+		}
 		
 		//Find hands with highest rank (add entries to 'handRanks' that win each round of rank comparisons)
 		Map<PokerHand, List<PlayingCard>> handRanks = new HashMap<PokerHand, List<PlayingCard>>();
