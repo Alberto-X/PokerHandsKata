@@ -38,10 +38,6 @@ public class PokerHand {
 		return pattern.getRankingCards(cards);
 	}
 	
-	public List<PlayingCard> getAllCards() {
-		return cards;
-	}
-	
 	public String getPlayerName() {
 		return playerName;
 	}

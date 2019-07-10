@@ -19,6 +19,7 @@ public class PokerGame {
 	
 	static {
 		//Only instances of patterns passed around
+		validPatterns.add(new StraightFlush(9));
 		validPatterns.add(new FourOfAKind(8));
 		validPatterns.add(new FullHouse(7));
 		validPatterns.add(new Flush(6));
@@ -49,6 +50,7 @@ public class PokerGame {
 			//FIND WINNER
 			PokerWinner winner = dealer.getWinner(hands);
 			if (winner.getWinningHands().size() == 1) {
+				//Single winner
 				PokerHand winningHand = winner.getWinningHands().get(0);
 				PokerPlayingCardPattern winningPattern = winningHand.getBestPattern();
 				
@@ -63,6 +65,7 @@ public class PokerGame {
 				System.out.println(String.format("  >> %s" + rankFormat, winningPattern.getPatternName(), rankAsString));
 			}
 			else if (winner.getWinningHands().size() > 1) {
+				//Multiple winners, tie
 				PokerHand someWinner = winner.getWinningHands().get(0);
 				PokerPlayingCardPattern winningPattern = someWinner.getBestPattern();
 				List<String> winnerNames = winner.getWinningHands().stream()

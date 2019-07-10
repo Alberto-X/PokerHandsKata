@@ -1,6 +1,5 @@
 package edu.osu.romanach.one;
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -12,6 +11,25 @@ public class PokerPatternTests {
 		List<PokerHand> hands = PokerInputParser.parseRound(round);
 		PokerDealer dealer = new PokerDealer();
 		return dealer.getWinner(hands);
+	}
+	
+	//WRONG HAND SIZE
+	
+	@Test
+	void noWinner() {
+		String round = ""
+				+ "Black:2S 3S 4S 5S,"
+				+ "White:2D 3D 4D 5D 6D 7D";
+		String expectedPattern = "No Pattern";
+		List<String> expectedWinningRanks = Arrays.asList();
+		
+		List<PokerHand> hands = PokerInputParser.parseRound(round);
+		PokerWinner winner = getWinner(round);
+		
+		assertEquals(0, winner.getWinningHands().size(), "Should be 0 winners");
+		assertEquals(expectedPattern, hands.get(0).getBestPattern().getPatternName(), "Pattern should be '" + expectedPattern + "'");
+		assertEquals(expectedPattern, hands.get(1).getBestPattern().getPatternName(), "Pattern should be '" + expectedPattern + "'");
+		assertEquals(expectedWinningRanks, winner.getWinningRanks().stream().map(r -> r.getValueName()).collect(Collectors.toList()), "Winning ranks should be " + expectedWinningRanks);
 	}
 	
 	//HIGH CARD
@@ -27,6 +45,21 @@ public class PokerPatternTests {
 		
 		assertEquals(1, winner.getWinningHands().size(), "Should be 1 winner");
 		assertEquals("Black", winner.getWinningHands().get(0).getPlayerName(), "Winning player should be 'Black'");
+		assertEquals(expectedPattern, winner.getWinningHands().get(0).getBestPattern().getPatternName(), "Winning pattern should be '" + expectedPattern + "'");
+		assertEquals(expectedWinningRanks, winner.getWinningRanks().stream().map(r -> r.getValueName()).collect(Collectors.toList()), "Winning ranks should be " + expectedWinningRanks);
+	}
+	
+	@Test
+	void highCardAgainstNoPattern() {
+		String round = ""
+				+ "Black:2S 3S 4S 5S,"
+				+ "White:2D 3D 4D 5D QH";
+		String expectedPattern = "High Card";
+		List<String> expectedWinningRanks = Arrays.asList();
+		PokerWinner winner = getWinner(round);
+		
+		assertEquals(1, winner.getWinningHands().size(), "Should be 1 winner");
+		assertEquals("White", winner.getWinningHands().get(0).getPlayerName(), "Winning player should be 'White'");
 		assertEquals(expectedPattern, winner.getWinningHands().get(0).getBestPattern().getPatternName(), "Winning pattern should be '" + expectedPattern + "'");
 		assertEquals(expectedWinningRanks, winner.getWinningRanks().stream().map(r -> r.getValueName()).collect(Collectors.toList()), "Winning ranks should be " + expectedWinningRanks);
 	}
@@ -459,7 +492,6 @@ public class PokerPatternTests {
 	
 	//STRAIGHT FLUSH
 	
-	@Ignore
 	@Test
 	void straightFlushWinner() {
 		String round = ""
@@ -475,7 +507,6 @@ public class PokerPatternTests {
 		assertEquals(expectedWinningRanks, winner.getWinningRanks().stream().map(r -> r.getValueName()).collect(Collectors.toList()), "Winning ranks should be " + expectedWinningRanks);
 	}
 	
-	@Ignore
 	@Test
 	void straightFlushHighCardWinner() {
 		String round = ""
@@ -491,7 +522,20 @@ public class PokerPatternTests {
 		assertEquals(expectedWinningRanks, winner.getWinningRanks().stream().map(r -> r.getValueName()).collect(Collectors.toList()), "Winning ranks should be " + expectedWinningRanks);
 	}
 	
-	@Ignore
+	@Test
+	void straightFlushAceLowTie() {
+		String round = ""
+				+ "Black:AS 2S 3S 4S 5S,"
+				+ "White:AH 2H 3H 4H 5H";
+		String expectedPattern = "Straight Flush";
+		List<String> expectedWinningRanks = Arrays.asList("5");
+		PokerWinner winner = getWinner(round);
+		
+		assertEquals(2, winner.getWinningHands().size(), "Should be 2 winners");
+		assertEquals(expectedPattern, winner.getWinningHands().get(0).getBestPattern().getPatternName(), "Winning pattern should be '" + expectedPattern + "'");
+		assertEquals(expectedWinningRanks, winner.getWinningRanks().stream().map(r -> r.getValueName()).collect(Collectors.toList()), "Winning ranks should be " + expectedWinningRanks);
+	}
+	
 	@Test
 	void straightFlushTie() {
 		String round = ""

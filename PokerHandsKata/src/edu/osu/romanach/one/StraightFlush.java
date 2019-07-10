@@ -1,11 +1,11 @@
 package edu.osu.romanach.one;
 import java.util.*;
 
-public class Straight extends PokerPlayingCardPattern {
-	private static String patternName = "Straight";
+public class StraightFlush extends PokerPlayingCardPattern {
+	private static String patternName = "Straight Flush";
 	private static int lowerAceValue = 1;
 	
-	public Straight(int value) {
+	public StraightFlush(int value) {
 		super(value, patternName);
 	}
 	
@@ -13,6 +13,14 @@ public class Straight extends PokerPlayingCardPattern {
 		PlayingCard ace = new PlayingCard("AS");
 		PlayingCard king = new PlayingCard("KS");
 		PlayingCard two = new PlayingCard("2S");
+		
+		//Ensure all suits the same
+		String suit = cards.get(0).getSuit();
+		for (PlayingCard card : cards) {
+			if (card.getSuit() != suit) {
+				return false;
+			}
+		}
 		
 		//Sort cards
 		List<PlayingCard> sortedCards = new ArrayList<PlayingCard>();

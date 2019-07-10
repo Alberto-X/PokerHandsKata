@@ -28,13 +28,13 @@ public abstract class PokerPlayingCardPattern {
 	 */
 	public abstract boolean isFoundIn(List<PlayingCard> cards);
 	/**
-	 * Returns a list of cards used to determine the "rank" of this pattern (for tie-breakers).
+	 * Returns a list of cards used to determine the "rank" of this pattern (for tie-breakers b/t hands w/ same pattern).
 	 * @requires {@code cards} must contain this pattern
 	 * @return list of cards (empty list if NoPattern)
 	 */
 	public abstract List<PlayingCard> getRankingCards(List<PlayingCard> cards);
 	/**
-	 * Returns the rank of this pattern as a string, given list of ranking cards.
+	 * Returns the rank of this pattern as a string, given a list of ranking cards.
 	 */
 	public abstract String getRankAsString(List<PlayingCard> ranks);
 }
