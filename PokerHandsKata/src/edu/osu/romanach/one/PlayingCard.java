@@ -52,6 +52,10 @@ public class PlayingCard {
 		return firstCharToUpper(valueName);
 	}
 	
+	public String getSuit() {
+		return suit;
+	}
+	
 	@Override
 	public String toString() {
 		return String.format("%s of %s", firstCharToUpper(valueName), suit);

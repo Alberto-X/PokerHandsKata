@@ -2,15 +2,21 @@ package edu.osu.romanach.one;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class HighCard extends PokerPlayingCardPattern {
-	private static String patternName = "High Card";
+public class Flush extends PokerPlayingCardPattern {
+	private static String patternName = "Flush";
 	
-	public HighCard(int value) {
+	public Flush(int value) {
 		super(value, patternName);
 	}
 	
 	public boolean isFoundIn(List<PlayingCard> cards) {
-		//Any set of cards can have a high card
+		//Ensure all cards have same suit
+		String suit = cards.get(0).getSuit();
+		for (PlayingCard card : cards) {
+			if (card.getSuit() != suit) {
+				return false;
+			}
+		}
 		return true;
 	}
 	
@@ -27,11 +33,11 @@ public class HighCard extends PokerPlayingCardPattern {
 		
 		return ranks;
 	}
-
+	
 	public String getRankAsString(List<PlayingCard> ranks) {
 		List<String> values = ranks.stream()
-								   .map(r -> r.getValueName())
-								   .collect(Collectors.toList());
+				   				   .map(r -> r.getValueName())
+				   				   .collect(Collectors.toList());
 		return String.format("[%s high]", String.join("-", values));
 	}
 }
